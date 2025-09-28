@@ -11,7 +11,6 @@ provider "yandex" {
   service_account_key_file = var.sa_key_path
   cloud_id                 = var.cloud_id
   folder_id                = var.folder_id
-  zone                     = var.zone
 }
 
 resource "yandex_iam_service_account" "tf_sa" {
@@ -23,7 +22,7 @@ resource "yandex_iam_service_account_static_access_key" "tf_key" {
   description        = "Access key for Terraform"
 }
 
-resource "yandex_storage_bucket" "tf_state" {
+resource "yandex_storage_bucket" "tf-state-nkh-d" {
   bucket     = var.bucket_name
   access_key = yandex_iam_service_account_static_access_key.tf_key.access_key
   secret_key = yandex_iam_service_account_static_access_key.tf_key.secret_key

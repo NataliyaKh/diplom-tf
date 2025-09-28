@@ -3,7 +3,7 @@ output "service_account_id" {
 }
 
 output "bucket_name" {
-  value = yandex_storage_bucket.tf_state.bucket
+  value = yandex_storage_bucket.tf-state-nkh-d.bucket
 }
 
 output "access_key" {
