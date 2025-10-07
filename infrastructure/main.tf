@@ -29,6 +29,19 @@ resource "yandex_vpc_network" "main" {
   name = "diplom-vpc"
 }
 
+resource "yandex_vpc_security_group" "ssh" {
+  name       = "allow-ssh"
+  network_id = yandex_vpc_network.main.id
+}
+
+resource "yandex_vpc_security_group_rule" "ssh_inbound" {
+  security_group_binding = yandex_vpc_security_group.ssh.id
+  direction              = "ingress"
+  protocol               = "TCP"
+  port                   = 22
+  v4_cidr_blocks         = ["0.0.0.0/0"]
+}
+
 resource "yandex_vpc_subnet" "subnet-a" {
   name           = "subnet-a"
   zone           = "ru-central1-a"
