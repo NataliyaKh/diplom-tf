@@ -3,4 +3,6 @@
 *.tfstate.*
 *.backup
 terraform.tfvars
+*.tfvars
 key.json
+.env

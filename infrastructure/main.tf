@@ -49,3 +49,8 @@ resource "yandex_vpc_subnet" "subnet-d" {
   network_id     = yandex_vpc_network.main.id
   v4_cidr_blocks = ["10.30.0.0/24"]
 }
+
+provider "vault" {
+  address         = "https://127.0.0.1:8200"
+  skip_tls_verify = true
+}
