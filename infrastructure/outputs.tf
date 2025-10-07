@@ -9,3 +9,7 @@ output "subnet_ids" {
 output "vpc_id" {
   value = yandex_vpc_network.main.id
 }
+
+output "security_group_id" {
+  value = yandex_vpc_security_group.ssh.id
+}
