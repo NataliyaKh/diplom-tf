@@ -88,7 +88,11 @@ resource "yandex_vpc_security_group" "k8s" {
   ingress {
     protocol       = "ANY"
     description    = "Allow internal node-to-node traffic"
-    v4_cidr_blocks = ["10.10.0.0/16"]
+    v4_cidr_blocks = [
+      "10.10.0.0/24",
+      "10.20.0.0/24",
+      "10.30.0.0/24"
+    ]
   }
 
   # Kubernetes API Server
@@ -96,7 +100,11 @@ resource "yandex_vpc_security_group" "k8s" {
     protocol       = "TCP"
     description    = "Kubernetes API Server"
     port           = 6443
-    v4_cidr_blocks = ["10.10.0.0/16"]
+    v4_cidr_blocks = [
+      "10.10.0.0/24",
+      "10.20.0.0/24",
+      "10.30.0.0/24"
+    ]
   }
 
   # Egress
