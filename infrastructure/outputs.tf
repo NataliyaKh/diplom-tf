@@ -7,7 +7,7 @@ output "subnet_ids" {
 }
 
 output "security_group_id" {
-  value = yandex_vpc_security_group.ssh.id
+  value = yandex_vpc_security_group.k8s.id
 }
 
 output "subnet_a_cidr" {
