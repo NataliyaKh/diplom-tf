@@ -107,6 +107,14 @@ resource "yandex_vpc_security_group" "k8s" {
     ]
   }
 
+  # VXLAN (Calico overlay network)
+  ingress {
+    protocol       = "UDP"
+    description    = "Allow VXLAN overlay"
+    port           = 4789
+    v4_cidr_blocks = ["10.0.0.0/8"]
+  }
+
   # Egress
   egress {
     protocol       = "ANY"
