@@ -9,7 +9,7 @@ terraform {
   backend "s3" {
     bucket     = "tf-state-nkh-d"
     region     = "ru-central1"
-    endpoints  = {
+    endpoints = {
       s3 = "https://storage.yandexcloud.net"
     }
     key                         = "infrastructure.tfstate"
@@ -76,7 +76,6 @@ resource "yandex_vpc_security_group" "k8s" {
   name       = "k8s-cluster-sg"
   network_id = yandex_vpc_network.main.id
 
-  # SSH
   ingress {
     protocol       = "TCP"
     description    = "Allow SSH"
@@ -84,7 +83,6 @@ resource "yandex_vpc_security_group" "k8s" {
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Internal traffic
   ingress {
     protocol       = "ANY"
     description    = "Allow internal node-to-node traffic"
@@ -95,7 +93,6 @@ resource "yandex_vpc_security_group" "k8s" {
     ]
   }
 
-  # Kubernetes API Server
   ingress {
     protocol       = "TCP"
     description    = "Kubernetes API Server"
@@ -107,7 +104,6 @@ resource "yandex_vpc_security_group" "k8s" {
     ]
   }
 
-  # VXLAN (Calico overlay network)
   ingress {
     protocol       = "UDP"
     description    = "Allow VXLAN overlay"
@@ -115,7 +111,6 @@ resource "yandex_vpc_security_group" "k8s" {
     v4_cidr_blocks = ["10.0.0.0/8"]
   }
 
-  # Egress
   egress {
     protocol       = "ANY"
     v4_cidr_blocks = ["0.0.0.0/0"]
