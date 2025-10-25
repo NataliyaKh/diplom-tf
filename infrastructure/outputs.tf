@@ -7,7 +7,7 @@ output "subnet_ids" {
 }
 
 output "security_group_id" {
-  value = yandex_vpc_security_group.k8s.id
+  value = yandex_vpc_security_group.my_sg.id
 }
 
 output "subnet_a_cidr" {
@@ -20,4 +20,8 @@ output "subnet_b_cidr" {
 
 output "subnet_d_cidr" {
   value = yandex_vpc_subnet.subnet_d.v4_cidr_blocks[0]
+}
+
+output "registry_id" {
+  value = yandex_container_registry.diplom_registry.id
 }
