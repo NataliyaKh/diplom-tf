@@ -40,30 +40,9 @@ data "terraform_remote_state" "sa_bucket" {
   }
 }
 
-# VPC and subnets
+# VPC
 resource "yandex_vpc_network" "main" {
   name = "diplom-network"
-}
-
-resource "yandex_vpc_subnet" "subnet_a" {
-  name           = "subnet-a"
-  zone           = "ru-central1-a"
-  network_id     = yandex_vpc_network.main.id
-  v4_cidr_blocks = ["10.0.0.0/24"]
-}
-
-resource "yandex_vpc_subnet" "subnet_b" {
-  name           = "subnet-b"
-  zone           = "ru-central1-b"
-  network_id     = yandex_vpc_network.main.id
-  v4_cidr_blocks = ["10.0.1.0/24"]
-}
-
-resource "yandex_vpc_subnet" "subnet_d" {
-  name           = "subnet-d"
-  zone           = "ru-central1-d"
-  network_id     = yandex_vpc_network.main.id
-  v4_cidr_blocks = ["10.0.2.0/24"]
 }
 
 # Service Accounts
@@ -85,5 +64,42 @@ resource "yandex_container_registry" "diplom_registry" {
 resource "yandex_vpc_security_group" "my_sg" {
   name       = "my-security-group"
   network_id = yandex_vpc_network.main.id
+
+  # Allow SSH
+  ingress {
+    protocol       = "TCP"
+    port           = 22
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    description    = "Allow SSH access"
+  }
+
+  # Allow ICMP (ping)
+  ingress {
+    protocol       = "ICMP"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    description    = "Allow ping"
+  }
+
+  # Allow all intra-cluster traffic
+  ingress {
+    description = "Allow all intra-cluster traffic"
+    protocol    = "ANY"
+    v4_cidr_blocks = ["10.0.0.0/8"]
+  }
+
+  # Allow kube-apiserver
+  ingress {
+    description = "Allow kube-apiserver"
+    protocol    = "TCP"
+    port        = 6443
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all egress (outbound)
+  egress {
+    protocol       = "ANY"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    description    = "Allow all outbound"
+  }
 }
 

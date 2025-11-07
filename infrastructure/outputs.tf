@@ -1,27 +1,18 @@
-output "subnet_ids" {
-  value = [
-    yandex_vpc_subnet.subnet_a.id,
-    yandex_vpc_subnet.subnet_b.id,
-    yandex_vpc_subnet.subnet_d.id,
-  ]
+# Outputs
+output "nat_gateway_status" {
+  value = {
+    nat_gateway_id = yandex_vpc_gateway.nat_gateway.id
+    route_table_id = yandex_vpc_route_table.nat_route.id
+  }
 }
 
-output "security_group_id" {
-  value = yandex_vpc_security_group.my_sg.id
-}
-
-output "subnet_a_cidr" {
-  value = yandex_vpc_subnet.subnet_a.v4_cidr_blocks[0]
-}
-
-output "subnet_b_cidr" {
-  value = yandex_vpc_subnet.subnet_b.v4_cidr_blocks[0]
-}
-
-output "subnet_d_cidr" {
-  value = yandex_vpc_subnet.subnet_d.v4_cidr_blocks[0]
-}
-
-output "registry_id" {
-  value = yandex_container_registry.diplom_registry.id
+output "instance_ips" {
+  value = {
+    master  = yandex_compute_instance.master.network_interface.0.nat_ip_address
+    master_local = yandex_compute_instance.master.network_interface.0.ip_address
+    worker1 = yandex_compute_instance.worker1.network_interface.0.nat_ip_address
+    worker1_local = yandex_compute_instance.worker1.network_interface.0.ip_address
+    worker2 = yandex_compute_instance.worker2.network_interface.0.nat_ip_address
+    worker2_local = yandex_compute_instance.worker2.network_interface.0.ip_address
+  }
 }
