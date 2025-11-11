@@ -43,9 +43,14 @@ resource "yandex_compute_instance" "worker1" {
   platform_id = "standard-v3"
   zone        = "ru-central1-b"
 
+  scheduling_policy {
+    preemptible = true
+  }
+
   resources {
     cores  = 2
     memory = 4
+    core_fraction = 50
   }
 
   boot_disk {
@@ -82,9 +87,14 @@ resource "yandex_compute_instance" "worker2" {
   platform_id = "standard-v3"
   zone        = "ru-central1-d"
 
+  scheduling_policy {
+    preemptible = true
+  }
+
   resources {
     cores  = 2
     memory = 4
+    core_fraction = 50
   }
 
   boot_disk {
