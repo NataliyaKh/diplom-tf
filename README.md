@@ -15,4 +15,4 @@ Terraform for diploma project
 * Статическое приложение: [http://158.160.62.46/nginx]
 * Grafana (логин-пароль стандартные): [http://158.160.62.46/dashboards]
 
-* Docker-образ: [cr.yandex/crpj9l8japnd0m75ra1k/diplom-nginx-app-nginx:v3.0]
+* Docker-образ: ```cr.yandex/crpj9l8japnd0m75ra1k/diplom-nginx-app-nginx:v4.0```
